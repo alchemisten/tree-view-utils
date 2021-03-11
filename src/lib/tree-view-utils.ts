@@ -1,17 +1,17 @@
 export type HierarchyItem<T> = T & { parentId?: string, nodeChildren?: HierarchyItem<T>[] }
 export type ViewHierarchy<T> = Record<string, HierarchyItem<T>>
 export type IdExtractor<T, K> = (elem: T) => K
-const defaultIdExtractor: IdExtractor<any, string> = (elem) => elem.id
-const defaultParentIdExtractor: IdExtractor<any, string | undefined> = (elem) => elem.parentId
+export const defaultIdExtractor: IdExtractor<any, string> = (elem) => elem.id
+export const defaultParentIdExtractor: IdExtractor<any, string | undefined> = (elem) => elem.parentId
 export type ParentPath = string[]
 export type ParentPathMap = Record<string, string[]>
 
 export class TreeViewUtils {
   static createHierarchy<T>(
       templates: T[],
+      isLeafDetector?: (elem: T) => boolean,
       idExtractor: IdExtractor<T, string> = (elem) => defaultIdExtractor(elem),
-      parentIdExtractor: IdExtractor<T, string | undefined> = (elem) => defaultParentIdExtractor(elem),
-      isLeafDetector?: (elem: T) => boolean
+      parentIdExtractor: IdExtractor<T, string | undefined> = (elem) => defaultParentIdExtractor(elem)
   ): ViewHierarchy<T> {
     const hierarchy: ViewHierarchy<T> = {}
 
@@ -34,7 +34,7 @@ export class TreeViewUtils {
             const parent = hierarchy[parentId]
             if (!parent || !parent.nodeChildren) {
               hierarchy[parentId] = {
-                templateChildren: [child],
+                nodeChildren: [child],
                 isLeaf: false
               } as any // We just have to create a skeleton for now!
             } else {
