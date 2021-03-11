@@ -1,6 +1,6 @@
 {
   "name": "@alchemisten/tree-view-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "This library contains utility methods which are often needed to prepare or create hierarchical parent/children data from flat format.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
