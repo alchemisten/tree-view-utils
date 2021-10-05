@@ -1,1 +1,1 @@
-export * from './lib/tree-view-utils';
+export * from './tree-view-utils';
